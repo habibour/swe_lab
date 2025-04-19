@@ -1,0 +1,3 @@
+/Users/mdhabibourrahman/3-2/my_project/build/CMakeFiles/runTests.dir
+/Users/mdhabibourrahman/3-2/my_project/build/CMakeFiles/edit_cache.dir
+/Users/mdhabibourrahman/3-2/my_project/build/CMakeFiles/rebuild_cache.dir
