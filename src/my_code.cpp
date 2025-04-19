@@ -115,52 +115,241 @@
 // // }
 
 // my_code.cpp
+// #include <iostream>
+// #include <string>
+// using namespace std;
+
+// class Shape
+// {
+// public:
+//     virtual void draw() = 0;
+//     virtual string name() = 0;
+// };
+
+// class Circle : public Shape
+// {
+// public:
+//     void draw()
+//     {
+//         cout << "Drawing Circle" << endl;
+//     }
+//     string name()
+//     {
+//         return "Circle";
+//     }
+// };
+
+// class Rectangle : public Shape
+// {
+// public:
+//     void draw()
+//     {
+//         cout << "Drawing Rectangle" << endl;
+//     }
+//     string name()
+//     {
+//         return "Rectangle";
+//     }
+// };
+
+// class ShapeFactory
+// {
+// public:
+//     Shape *getShape(string shapeType)
+//     {
+//         if (shapeType == "circle")
+//             return new Circle();
+//         if (shapeType == "rectangle")
+//             return new Rectangle();
+//         return nullptr;
+//     }
+// };
+
+// absteract_factory.cpp
+
+// #include <iostream>
+// #include <string>
+// using namespace std;
+
+// class Chair
+// {
+// public:
+//     virtual string getType() = 0;
+// };
+
+// class VictorianChair : public Chair
+// {
+// public:
+//     string getType()
+//     {
+//         return "Victorian Chair";
+//     }
+// };
+
+// class ModernChair : public Chair
+// {
+// public:
+//     string getType()
+//     {
+//         return "Modern Chair";
+//     }
+// };
+
+// class Sofa
+// {
+// public:
+//     virtual string getStyle() = 0;
+// };
+
+// class VictorianSofa : public Sofa
+// {
+// public:
+//     string getStyle()
+//     {
+//         return "Victorian Sofa";
+//     }
+// };
+
+// class ModernSofa : public Sofa
+// {
+// public:
+//     string getStyle()
+//     {
+//         return "Modern Sofa";
+//     }
+// };
+
+// class FurnitureFactory
+// {
+// public:
+//     virtual Chair *createChair() = 0;
+//     virtual Sofa *createSofa() = 0;
+// };
+
+// class VictorianFurnitureFactory : public FurnitureFactory
+// {
+// public:
+//     Chair *createChair()
+//     {
+//         return new VictorianChair();
+//     }
+
+//     Sofa *createSofa()
+//     {
+//         return new VictorianSofa();
+//     }
+// };
+
+// class ModernFurnitureFactory : public FurnitureFactory
+// {
+// public:
+//     Chair *createChair()
+//     {
+//         return new ModernChair();
+//     }
+
+//     Sofa *createSofa()
+//     {
+//         return new ModernSofa();
+//     }
+// };
+
 #include <iostream>
 #include <string>
+
 using namespace std;
 
-class Shape
+// Abstract Product: Window
+class Window
 {
 public:
-    virtual void draw() = 0;
-    virtual string name() = 0;
+    virtual void render() = 0;
+    virtual ~Window() {}
 };
 
-class Circle : public Shape
+// Concrete Product: Windows Window
+class WindowsWindow : public Window
 {
 public:
-    void draw()
+    void render() override
     {
-        cout << "Drawing Circle" << endl;
-    }
-    string name()
-    {
-        return "Circle";
-    }
-};
-
-class Rectangle : public Shape
-{
-public:
-    void draw()
-    {
-        cout << "Drawing Rectangle" << endl;
-    }
-    string name()
-    {
-        return "Rectangle";
+        cout << "Rendering Windows Window" << endl;
     }
 };
 
-class ShapeFactory
+// Concrete Product: Linux Window
+class LinuxWindow : public Window
 {
 public:
-    Shape *getShape(string shapeType)
+    void render() override
     {
-        if (shapeType == "circle")
-            return new Circle();
-        if (shapeType == "rectangle")
-            return new Rectangle();
-        return nullptr;
+        cout << "Rendering Linux Window" << endl;
+    }
+};
+
+// Abstract Product: Scrollbar
+class Scrollbar
+{
+public:
+    virtual void render() = 0;
+    virtual ~Scrollbar() {}
+};
+
+// Concrete Product: Windows Scrollbar
+class WindowsScrollbar : public Scrollbar
+{
+public:
+    void render() override
+    {
+        cout << "Rendering Windows Scrollbar" << endl;
+    }
+};
+
+// Concrete Product: Linux Scrollbar
+class LinuxScrollbar : public Scrollbar
+{
+public:
+    void render() override
+    {
+        cout << "Rendering Linux Scrollbar" << endl;
+    }
+};
+
+// Abstract Factory
+class GUIFactory
+{
+public:
+    virtual Window *createWindow() = 0;
+    virtual Scrollbar *createScrollbar() = 0;
+    virtual ~GUIFactory() {}
+};
+
+// Concrete Factory: Windows
+class WindowsFactory : public GUIFactory
+{
+public:
+    Window *createWindow() override
+    {
+        return new WindowsWindow();
+    }
+
+    Scrollbar *createScrollbar() override
+    {
+        return new WindowsScrollbar();
+    }
+};
+
+// Concrete Factory: Linux
+class LinuxFactory : public GUIFactory
+{
+public:
+    Window *createWindow() override
+    {
+        return new LinuxWindow();
+    }
+
+    Scrollbar *createScrollbar() override
+    {
+        return new LinuxScrollbar();
     }
 };

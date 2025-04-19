@@ -44,33 +44,130 @@
 //     return RUN_ALL_TESTS();                 // Run all the tests.
 // }
 
+// #include <gtest/gtest.h>
+// #include "../src/my_code.cpp"
+
+// TEST(FactoryTest, CircleCreation)
+// {
+//     ShapeFactory factory;
+//     Shape *shape = factory.getShape("circle");
+
+//     testing::internal::CaptureStdout();
+//     shape->draw();
+//     string output = testing::internal::GetCapturedStdout();
+//     EXPECT_EQ(output, "Drawing Circle\n");
+//     EXPECT_EQ(shape->name(), "Circle");
+
+//     delete shape;
+// }
+
+// TEST(FactoryTest, RectangleCreation)
+// {
+//     ShapeFactory factory;
+//     Shape *shape = factory.getShape("rectangle");
+
+//     testing::internal::CaptureStdout();
+//     shape->draw();
+//     string output = testing::internal::GetCapturedStdout();
+//     EXPECT_EQ(output, "Drawing Rectangle\n");
+//     EXPECT_EQ(shape->name(), "Rectangle");
+
+//     delete shape;
+// }
+
+// abstruct
+
+// #include <gtest/gtest.h>
+// #include "../src/my_code.cpp"
+
+// TEST(AbstractFactoryTest, VictorianFactoryTest)
+// {
+//     FurnitureFactory *factory = new VictorianFurnitureFactory();
+//     Chair *chair = factory->createChair();
+//     Sofa *sofa = factory->createSofa();
+
+//     EXPECT_EQ(chair->getType(), "Victorian Chair");
+//     EXPECT_EQ(sofa->getStyle(), "Victorian Sofa");
+
+//     delete chair;
+//     delete sofa;
+//     delete factory;
+// }
+
+// TEST(AbstractFactoryTest, ModernFactoryTest)
+// {
+//     FurnitureFactory *factory = new ModernFurnitureFactory();
+//     Chair *chair = factory->createChair();
+//     Sofa *sofa = factory->createSofa();
+
+//     EXPECT_EQ(chair->getType(), "Modern Chair");
+//     EXPECT_EQ(sofa->getStyle(), "Modern Sofa");
+
+//     delete chair;
+//     delete sofa;
+//     delete factory;
+// }
+
 #include <gtest/gtest.h>
+#include <sstream>
 #include "../src/my_code.cpp"
 
-TEST(FactoryTest, CircleCreation)
+using namespace std;
+
+class GuiTestHelper : public ::testing::Test
 {
-    ShapeFactory factory;
-    Shape *shape = factory.getShape("circle");
+protected:
+    stringstream buffer;
+    streambuf *oldCout;
 
-    testing::internal::CaptureStdout();
-    shape->draw();
-    string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "Drawing Circle\n");
-    EXPECT_EQ(shape->name(), "Circle");
+    void SetUp() override
+    {
+        oldCout = cout.rdbuf(buffer.rdbuf());
+    }
 
-    delete shape;
+    void TearDown() override
+    {
+        cout.rdbuf(oldCout);
+    }
+
+    string getOutput()
+    {
+        return buffer.str();
+    }
+};
+
+TEST_F(GuiTestHelper, WindowsFactoryTest)
+{
+    GUIFactory *factory = new WindowsFactory();
+    Window *window = factory->createWindow();
+    Scrollbar *scrollbar = factory->createScrollbar();
+
+    window->render();
+    scrollbar->render();
+
+    string output = getOutput();
+    EXPECT_NE(output.find("Rendering Windows Window"), string::npos);
+    EXPECT_NE(output.find("Rendering Windows Scrollbar"), string::npos);
+
+    delete window;
+    delete scrollbar;
+    delete factory;
 }
 
-TEST(FactoryTest, RectangleCreation)
+TEST_F(GuiTestHelper, LinuxFactoryTest)
 {
-    ShapeFactory factory;
-    Shape *shape = factory.getShape("rectangle");
+    GUIFactory *factory = new LinuxFactory();
+    Window *window = factory->createWindow();
+    Scrollbar *scrollbar = factory->createScrollbar();
 
-    testing::internal::CaptureStdout();
-    shape->draw();
-    string output = testing::internal::GetCapturedStdout();
-    EXPECT_EQ(output, "Drawing Rectangle\n");
-    EXPECT_EQ(shape->name(), "Rectangle");
+    window->render();
+    scrollbar->render();
 
-    delete shape;
+    string output = getOutput();
+    EXPECT_NE(output.find("Rendering Linux Window"), string::npos);
+    EXPECT_NE(output.find("Rendering Linux Scrollbar"), string::npos);
+
+    delete window;
+    delete scrollbar;
+    delete factory;
 }
