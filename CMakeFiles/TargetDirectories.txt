@@ -1,2 +1,0 @@
-/Users/mdhabibourrahman/3-2/my_project/CMakeFiles/edit_cache.dir
-/Users/mdhabibourrahman/3-2/my_project/CMakeFiles/rebuild_cache.dir

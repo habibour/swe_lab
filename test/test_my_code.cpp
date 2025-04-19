@@ -1,113 +1,110 @@
-#include <gtest/gtest.h>
-#include <vector>
-#include "my_code.h"
+// #include <gtest/gtest.h>
+// #include "../src/my_code.cpp" // Include your header file that contains the class definitions.
 
-using namespace std;
+// class VegBurgerTest : public ::testing::Test
+// {
+// protected:
+//     // Setup any common test resources here, if needed.
+//     void SetUp() override
+//     {
+//         // Initialize objects if necessary
+//     }
 
-class testFix : public testing::Test
-{
-public:
-    Student *s;
-    vector<float> vec = {1, 2, 3};
+//     void TearDown() override
+//     {
+//         // Clean up after tests if necessary
+//     }
+// };
 
-    void SetUp()
-    {
-        cout << "SETUP" << endl;
-        s = new Student();
-    }
+// // Test case to check if the VegBurger object is created properly.
+// TEST_F(VegBurgerTest, CreateVegBurger)
+// {
+//     VegBurger vegBurger;
 
-    void TearDown()
-    {
-        s->~Student();
-        cout << "TEARDOWN" << endl;
-    }
-};
+//     // Capture the output of the create() method.
+//     testing::internal::CaptureStdout();
+//     vegBurger.create();
 
-// TEST(StudentTest, AvgTest) {
-//     Student s;
-//     vector<float> vec = {1, 2, 3};
-//     float value = s.avg(vec);
-
-//     EXPECT_TRUE(s.avg(vec) == 2);
-//     EXPECT_FALSE(s.avg(vec) == 0);
-//     EXPECT_EQ(s.avg(vec), 2);
-//     EXPECT_EQ(s.avg(vec), 0);
-//     EXPECT_NE(s.avg(vec), 0);
-//     EXPECT_LT(s.avg(vec), 0);
-//     EXPECT_LE(s.avg(vec), 0);
-//     EXPECT_GT(s.avg(vec), 0);
-//     EXPECT_GE(s.avg(vec), 0);
-//     EXPECT_FLOAT_EQ(s.avg(vec), 0.0);
-//     EXPECT_DOUBLE_EQ(s.avg(vec), 0.0);
-//     EXPECT_NEAR(s.avg(vec), 0.0, 0.0001);
-//     EXPECT_STREQ(s.avg(vec), "helo");
-//     EXPECT_STRNE(s.avg(vec), "helo");
-//     EXPECT_STRCASEEQ(s.avg(vec), "helo");
-//     EXPECT_STRCASENE(s.avg(vec), "helo");
-
-//     ASSERT_TRUE(s.avg(vec) == 2);
-//     ASSERT_FALSE(s.avg(vec) == 0);
-//     ASSERT_TRUE(s.avg(vec) == 2);
-//     ASSERT_FALSE(s.avg(vec) == 0);
-//     ASSERT_EQ(s.avg(vec), 0);
-//     ASSERT_NE(s.avg(vec), 0);
-//     ASSERT_LT(s.avg(vec), 0);
-//     ASSERT_LE(s.avg(vec), 0);
-//     ASSERT_GT(s.avg(vec), 0);
-//     ASSERT_GE(s.avg(vec), 0);
-//     ASSERT_FLOAT_EQ(s.avg(vec), 0.0);
-//     ASSERT_DOUBLE_EQ(s.avg(vec), 0.0);
-//     ASSERT_NEAR(s.avg(vec), 0.0, 0.0001);
-//     ASSERT_STREQ(s.avg(vec), "helo");
-//     ASSERT_STRNE(s.avg(vec), "helo");
-//     ASSERT_STRCASEEQ(s.avg(vec), "helo");
-//     ASSERT_STRCASENE(s.avg(vec), "helo");
-
+//     // Check if the correct message is printed.
+//     std::string output = testing::internal::GetCapturedStdout();
+//     EXPECT_EQ(output, "Created VegBurger!!!\n");
 // }
 
-TEST_F(testFix, AvgTest)
-{
-    EXPECT_EQ(s->avg(vec), 2);
-    EXPECT_EQ(s->avg(vec), 0);
-    EXPECT_TRUE(s->avg(vec) == 2);
-    EXPECT_FALSE(s->avg(vec) == 0);
-    EXPECT_NE(s->avg(vec), 0);
-    EXPECT_LT(s->avg(vec), 0);
-    EXPECT_LE(s->avg(vec), 0);
-    EXPECT_GT(s->avg(vec), 0);
-    EXPECT_GE(s->avg(vec), 0);
-    EXPECT_FLOAT_EQ(s->avg(vec), 0.0);
-    EXPECT_DOUBLE_EQ(s->avg(vec), 0.0);
-    EXPECT_NEAR(s->avg(vec), 0.0, 0.0001);
-    // EXPECT_STREQ(s->avg(vec), "helo");
-    // EXPECT_STRNE(s->avg(vec), "helo");
-    // EXPECT_STRCASEEQ(s->avg(vec), "helo");
-    // EXPECT_STRCASENE(s->avg(vec), "helo");
+// // Test case to check if the name() method returns the correct name.
+// TEST_F(VegBurgerTest, NameOfVegBurger)
+// {
+//     VegBurger vegBurger;
+//     EXPECT_EQ(vegBurger.name(), "Vegi burger");
+// }
 
-    ASSERT_TRUE(s->avg(vec) == 2);
-    ASSERT_FALSE(s->avg(vec) == 0);
-    ASSERT_TRUE(s->avg(vec) == 2);
-    ASSERT_FALSE(s->avg(vec) == 0);
-    ASSERT_EQ(s->avg(vec), 0);
-    ASSERT_NE(s->avg(vec), 0);
-    ASSERT_LT(s->avg(vec), 0);
-    ASSERT_LE(s->avg(vec), 0);
-    ASSERT_GT(s->avg(vec), 0);
-    ASSERT_GE(s->avg(vec), 0);
-    ASSERT_FLOAT_EQ(s->avg(vec), 0.0);
-    ASSERT_DOUBLE_EQ(s->avg(vec), 0.0);
-    ASSERT_NEAR(s->avg(vec), 0.0, 0.0001);
-    // ASSERT_STREQ(s->avg(vec), "helo");
-    // ASSERT_STRNE(s->avg(vec), "helo");
-    // ASSERT_STRCASEEQ(s->avg(vec), "helo");
-    // ASSERT_STRCASENE(s->avg(vec), "helo");
+// // Main function to run all the tests.
+// int main(int argc, char **argv)
+// {
+//     ::testing::InitGoogleTest(&argc, argv); // Initialize Google Test framework.
+//     return RUN_ALL_TESTS();                 // Run all the tests.
+// }
+
+#include <gtest/gtest.h>
+#include "../src/my_code.cpp" // Include your adapter pattern implementation
+
+class AudioPlayerTest : public ::testing::Test
+{
+protected:
+    void SetUp() override {}
+    void TearDown() override {}
+};
+
+// Test for playing mp3
+TEST_F(AudioPlayerTest, PlayMp3File)
+{
+    AudioPlayer player;
+
+    testing::internal::CaptureStdout();
+    player.play("mp3", "song.mp3");
+    std::string output = testing::internal::GetCapturedStdout();
+
+    EXPECT_EQ(output, "Playing mp3 file. Name: song.mp3\n");
 }
 
-int main()
+// Test for playing mp4 via adapter
+TEST_F(AudioPlayerTest, PlayMp4File)
 {
-    testing::InitGoogleTest();
-    int result = RUN_ALL_TESTS();
-    return 0;
+    AudioPlayer player;
+
+    testing::internal::CaptureStdout();
+    player.play("mp4", "video.mp4");
+    std::string output = testing::internal::GetCapturedStdout();
+
+    EXPECT_EQ(output, "Playing mp4 file. Name: video.mp4\n");
 }
 
- write a test for the code in my_code.h and my_code.cpp
+// Test for playing vlc via adapter
+TEST_F(AudioPlayerTest, PlayVlcFile)
+{
+    AudioPlayer player;
+
+    testing::internal::CaptureStdout();
+    player.play("vlc", "movie.vlc");
+    std::string output = testing::internal::GetCapturedStdout();
+
+    EXPECT_EQ(output, "Playing vlc file. Name: movie.vlc\n");
+}
+
+// Test for unsupported format
+TEST_F(AudioPlayerTest, PlayUnsupportedFormat)
+{
+    AudioPlayer player;
+
+    testing::internal::CaptureStdout();
+    player.play("avi", "clip.avi");
+    std::string output = testing::internal::GetCapturedStdout();
+
+    EXPECT_EQ(output, "Invalid media. avi format not supported\n");
+}
+
+// Main function to run all tests
+int main(int argc, char **argv)
+{
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}
