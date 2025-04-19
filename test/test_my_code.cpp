@@ -45,66 +45,32 @@
 // }
 
 #include <gtest/gtest.h>
-#include "../src/my_code.cpp" // Include your adapter pattern implementation
+#include "../src/my_code.cpp"
 
-class AudioPlayerTest : public ::testing::Test
+TEST(FactoryTest, CircleCreation)
 {
-protected:
-    void SetUp() override {}
-    void TearDown() override {}
-};
-
-// Test for playing mp3
-TEST_F(AudioPlayerTest, PlayMp3File)
-{
-    AudioPlayer player;
+    ShapeFactory factory;
+    Shape *shape = factory.getShape("circle");
 
     testing::internal::CaptureStdout();
-    player.play("mp3", "song.mp3");
-    std::string output = testing::internal::GetCapturedStdout();
+    shape->draw();
+    string output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "Drawing Circle\n");
+    EXPECT_EQ(shape->name(), "Circle");
 
-    EXPECT_EQ(output, "Playing mp3 file. Name: song.mp3\n");
+    delete shape;
 }
 
-// Test for playing mp4 via adapter
-TEST_F(AudioPlayerTest, PlayMp4File)
+TEST(FactoryTest, RectangleCreation)
 {
-    AudioPlayer player;
+    ShapeFactory factory;
+    Shape *shape = factory.getShape("rectangle");
 
     testing::internal::CaptureStdout();
-    player.play("mp4", "video.mp4");
-    std::string output = testing::internal::GetCapturedStdout();
+    shape->draw();
+    string output = testing::internal::GetCapturedStdout();
+    EXPECT_EQ(output, "Drawing Rectangle\n");
+    EXPECT_EQ(shape->name(), "Rectangle");
 
-    EXPECT_EQ(output, "Playing mp4 file. Name: video.mp4\n");
-}
-
-// Test for playing vlc via adapter
-TEST_F(AudioPlayerTest, PlayVlcFile)
-{
-    AudioPlayer player;
-
-    testing::internal::CaptureStdout();
-    player.play("vlc", "movie.vlc");
-    std::string output = testing::internal::GetCapturedStdout();
-
-    EXPECT_EQ(output, "Playing vlc file. Name: movie.vlc\n");
-}
-
-// Test for unsupported format
-TEST_F(AudioPlayerTest, PlayUnsupportedFormat)
-{
-    AudioPlayer player;
-
-    testing::internal::CaptureStdout();
-    player.play("avi", "clip.avi");
-    std::string output = testing::internal::GetCapturedStdout();
-
-    EXPECT_EQ(output, "Invalid media. avi format not supported\n");
-}
-
-// Main function to run all tests
-int main(int argc, char **argv)
-{
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+    delete shape;
 }

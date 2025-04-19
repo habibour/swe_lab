@@ -114,103 +114,53 @@
 // //     return 0;
 // // }
 
+// my_code.cpp
 #include <iostream>
 #include <string>
-
 using namespace std;
 
-// Target interface (the interface client code expects)
-class MediaPlayer
+class Shape
 {
 public:
-    virtual void play(string audioType, string fileName) = 0;
+    virtual void draw() = 0;
+    virtual string name() = 0;
 };
 
-// Adaptee 1 (Advanced media player with a different interface)
-class AdvancedMediaPlayer
+class Circle : public Shape
 {
 public:
-    virtual void playVlc(string fileName) = 0;
-    virtual void playMp4(string fileName) = 0;
-};
-
-class VlcPlayer : public AdvancedMediaPlayer
-{
-public:
-    void playVlc(string fileName)
+    void draw()
     {
-        cout << "Playing vlc file. Name: " << fileName << endl;
+        cout << "Drawing Circle" << endl;
     }
-
-    void playMp4(string fileName)
+    string name()
     {
-        // Do nothing
+        return "Circle";
     }
 };
 
-class Mp4Player : public AdvancedMediaPlayer
+class Rectangle : public Shape
 {
 public:
-    void playVlc(string fileName)
+    void draw()
     {
-        // Do nothing
+        cout << "Drawing Rectangle" << endl;
     }
-
-    void playMp4(string fileName)
+    string name()
     {
-        cout << "Playing mp4 file. Name: " << fileName << endl;
+        return "Rectangle";
     }
 };
 
-// Adapter class
-class MediaAdapter : public MediaPlayer
+class ShapeFactory
 {
-    AdvancedMediaPlayer *advancedMusicPlayer;
-
 public:
-    MediaAdapter(string audioType)
+    Shape *getShape(string shapeType)
     {
-        if (audioType == "vlc")
-            advancedMusicPlayer = new VlcPlayer();
-        else if (audioType == "mp4")
-            advancedMusicPlayer = new Mp4Player();
-    }
-
-    void play(string audioType, string fileName)
-    {
-        if (audioType == "vlc")
-            advancedMusicPlayer->playVlc(fileName);
-        else if (audioType == "mp4")
-            advancedMusicPlayer->playMp4(fileName);
-    }
-
-    ~MediaAdapter()
-    {
-        delete advancedMusicPlayer;
-    }
-};
-
-// Concrete class implementing MediaPlayer interface
-class AudioPlayer : public MediaPlayer
-{
-    MediaAdapter *mediaAdapter;
-
-public:
-    void play(string audioType, string fileName)
-    {
-        if (audioType == "mp3")
-        {
-            cout << "Playing mp3 file. Name: " << fileName << endl;
-        }
-        else if (audioType == "vlc" || audioType == "mp4")
-        {
-            mediaAdapter = new MediaAdapter(audioType);
-            mediaAdapter->play(audioType, fileName);
-            delete mediaAdapter;
-        }
-        else
-        {
-            cout << "Invalid media. " << audioType << " format not supported" << endl;
-        }
+        if (shapeType == "circle")
+            return new Circle();
+        if (shapeType == "rectangle")
+            return new Rectangle();
+        return nullptr;
     }
 };
